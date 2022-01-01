@@ -1,0 +1,78 @@
+<ClockScreen>
+
+    # clocktime: clocktime
+    container: container
+    name: "clock"
+
+    MDScreen:
+
+        MDBoxLayout:
+            size: root.size
+            orientation: 'vertical'
+            spacing: '10dp'
+
+            MDToolbar:
+                
+                title: "TimeKeeper"
+                elevation: 8
+
+            ScrollView:
+                scroll_timeout: 100
+
+                MDList:
+                    id: container
+
+            MDBottomAppBar:
+
+                MDToolbar:
+                    icon: "clock-outline"
+                    type: "bottom"
+                    mode: 'center'
+                    left_action_items: [["file-document-outline", lambda x: app.ChangeScreen('reports')]]
+                    on_action_button: root.clockIn()
+
+<SwipeToClockOut>
+    size_hint_y: None
+    height: content.height
+    type_swipe: 'auto'
+    on_swipe_complete: app.root.get_screen('clock').clockOut(root.db_id, root)
+
+    MDCardSwipeLayerBox:
+        # content under card
+        # icon: "clock-out"
+
+    MDCardSwipeFrontBox:
+        OneLineListItem:
+            id: content
+            text: root.text
+            _no_ripple_effect: True
+
+<ReportsScreen>
+    name: "reports"
+    container: container
+
+    MDScreen:
+
+        MDBoxLayout:
+            size: root.size
+            orientation: 'vertical'
+            spacing: '10dp'
+
+            MDToolbar:
+                
+                title: "TimeKeeper"
+                elevation: 8
+                left_action_items: [["arrow-left", lambda x: app.ChangeScreen('clock')]]
+
+            ScrollView:
+                scroll_timeout: 100
+                MDList:
+                    id: container
+            
+            MDBottomAppBar:
+
+                MDToolbar:
+                    icon: "calendar-outline"
+                    type: "bottom"
+                    mode: "center"
+                    on_action_button: root.show_date_picker()
