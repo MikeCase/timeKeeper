@@ -4,3 +4,4 @@ __pycache__/
 .venv/
 .wslenv/
 buildozer.spec
+icons.py
